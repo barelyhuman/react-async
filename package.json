@@ -1,0 +1,106 @@
+{
+  "name": "@barelyhuman/react-async",
+  "version": "0.0.0",
+  "description": "Async Utilities React",
+  "license": "MIT",
+  "repository": "barelyhuman/react-async",
+  "author": {
+    "name": "Reaper",
+    "email": "ahoy@barelyhuman.dev",
+    "url": "https://barelyhuman.dev"
+  },
+  "types": "./index.d.ts",
+  "main": "./dist/index.js",
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "build": "babel 'src' --out-dir=dist",
+    "prepare": "npm run build && husky install",
+    "test": "ava",
+    "fix": "npx standard --fix src/**/*.js",
+    "size": "GITHUB_TOKEN='' npx bundlesize"
+  },
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "bundlesize": [
+    {
+      "path": "./dist/**/*.js",
+      "maxSize": "1 kB",
+      "compression": "brotli"
+    },
+    {
+      "path": "./dist/**/*.js",
+      "maxSize": "1 kB"
+    }
+  ],
+  "lint-staged": {
+    "*.js": [
+      "npx standard --fix"
+    ]
+  },
+  "keywords": [
+    "react",
+    "component",
+    "components",
+    "util",
+    "utils",
+    "utilities",
+    "helper",
+    "helpers",
+    "view",
+    "asynchronous",
+    "async",
+    "render",
+    "useAsync",
+    "useAsyncEffect",
+    "AsyncView"
+  ],
+  "devDependencies": {
+    "@ava/babel": "^2.0.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.16.0",
+    "@testing-library/react": "^12.1.2",
+    "@types/react": "^16.9.2",
+    "ava": "^3",
+    "browser-env": "^3.2.5",
+    "core-js": "^3.19.1",
+    "esm": "^3.2.25",
+    "got": "^11.8.2",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.6",
+    "react": "^16.14.0",
+    "react-dom": "^16.8.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8"
+  },
+  "ava": {
+    "babel": true,
+    "nodeArguments": [
+      "--experimental-worker"
+    ],
+    "require": [
+      "@babel/register"
+    ]
+  },
+  "browserslist": "> 0.25%, not dead",
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "corejs": 3,
+          "targets": "> 0.25%, not dead"
+        }
+      ],
+      "@babel/preset-react"
+    ]
+  }
+}
