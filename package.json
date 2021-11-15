@@ -69,7 +69,7 @@
     "@types/react": "^16.9.2",
     "ava": "^3",
     "browser-env": "^3.2.5",
-    "core-js": "^3.19.1",
+    "core-js": "3",
     "esm": "^3.2.25",
     "got": "^11.8.2",
     "husky": "^7.0.4",
@@ -80,27 +80,38 @@
   "peerDependencies": {
     "react": ">=16.8"
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-react"
+    ]
+  },
   "ava": {
-    "babel": true,
+    "require": [
+      "esm"
+    ],
     "nodeArguments": [
       "--experimental-worker"
     ],
-    "require": [
-      "@babel/register"
-    ]
-  },
-  "browserslist": "> 0.25%, not dead",
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "useBuiltIns": "usage",
-          "corejs": 3,
-          "targets": "> 0.25%, not dead"
-        }
+    "babel": {
+      "extensions": [
+        "js",
+        "jsx"
       ],
-      "@babel/preset-react"
-    ]
+      "testOptions": {
+        "babelrc": false,
+        "configFile": false,
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "useBuiltIns": "usage",
+              "corejs": 3,
+              "targets": ">0.25%,not dead"
+            }
+          ],
+          "@babel/preset-react"
+        ]
+      }
+    }
   }
 }
