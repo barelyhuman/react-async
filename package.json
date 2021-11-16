@@ -19,7 +19,8 @@
     "prepare": "npm run build && husky install",
     "test": "ava",
     "fix": "npx standard --fix src/**/*.js",
-    "size": "GITHUB_TOKEN='' npx bundlesize"
+    "size": "GITHUB_TOKEN='' npx bundlesize",
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "dist",
