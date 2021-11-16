@@ -19,4 +19,5 @@ export declare function useAsync(fetcher?: () => Promise<void>): {
   data: any | null;
   loading: boolean;
   error: any | null;
+  refetch(): void;
 };

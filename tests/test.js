@@ -43,3 +43,6 @@ test("<AsyncView data={fetchPostError} />", async (t) => {
   );
   await waitFor(() => t.assert(getByText(ERROR_MESSAGE)));
 });
+
+// TODO: add hook example code and render and test hooks
+// need to test initial render of loading, then error state , data state and refetched(loading + data state again) state.

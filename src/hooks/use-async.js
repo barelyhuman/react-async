@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useAsyncEffect } from "./use-async-effect";
 
 export function useAsync(fetcher = async () => {}) {
@@ -6,7 +6,7 @@ export function useAsync(fetcher = async () => {}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useAsyncEffect(async () => {
+  const _fetcherCB = useCallback(async () => {
     try {
       setLoading(true);
       const data = await fetcher();
@@ -18,5 +18,16 @@ export function useAsync(fetcher = async () => {}) {
     }
   }, []);
 
-  return { data, loading, error };
+  useAsyncEffect(async () => {
+    _fetcherCB();
+  }, [_fetcherCB]);
+
+  return {
+    data,
+    loading,
+    error,
+    refetch() {
+      _fetcherCB();
+    },
+  };
 }
