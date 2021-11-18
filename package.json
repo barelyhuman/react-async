@@ -10,32 +10,26 @@
     "url": "https://barelyhuman.dev"
   },
   "types": "./index.d.ts",
-  "main": "./dist/index.js",
+  "type": "module",
+  "source": "src/index.js",
+  "main": "./dist/index.cjs",
+  "exports": "./dist/index.esm.js",
+  "module": "./dist/index.module.js",
   "engines": {
     "node": ">=12"
   },
   "scripts": {
-    "build": "babel 'src' --out-dir=dist",
+    "init": "npm i; cd tests;npm i;cd ..",
+    "build": "microbundle --no-sourcemap --format 'modern,esm,cjs' --generateTypes false",
+    "dev": "microbundle watch",
+    "test": "jest",
     "prepare": "npm run build && husky install",
-    "test": "ava",
     "fix": "npx standard --fix src/**/*.js",
-    "size": "GITHUB_TOKEN='' npx bundlesize",
     "prepublishOnly": "npm run build"
   },
   "files": [
     "dist",
     "index.d.ts"
-  ],
-  "bundlesize": [
-    {
-      "path": "./dist/**/*.js",
-      "maxSize": "1 kB",
-      "compression": "brotli"
-    },
-    {
-      "path": "./dist/**/*.js",
-      "maxSize": "1 kB"
-    }
   ],
   "lint-staged": {
     "*.js": [
@@ -60,23 +54,18 @@
     "AsyncView"
   ],
   "devDependencies": {
-    "@ava/babel": "^2.0.0",
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.16.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.16.0",
     "@testing-library/react": "^12.1.2",
     "@types/react": "^16.9.2",
-    "ava": "^3",
-    "browser-env": "^3.2.5",
-    "core-js": "3",
-    "esm": "^3.2.25",
-    "got": "^11.8.2",
+    "browser-env": "^3.3.0",
+    "got": "^11.8.3",
     "husky": "^7.0.4",
+    "jest": "^27.3.1",
     "lint-staged": "^11.2.6",
+    "microbundle": "^0.14.2",
     "react": "^16.14.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^17.0.2"
   },
   "peerDependencies": {
     "react": ">=16.8"
@@ -85,34 +74,5 @@
     "presets": [
       "@babel/preset-react"
     ]
-  },
-  "ava": {
-    "require": [
-      "esm"
-    ],
-    "nodeArguments": [
-      "--experimental-worker"
-    ],
-    "babel": {
-      "extensions": [
-        "js",
-        "jsx"
-      ],
-      "testOptions": {
-        "babelrc": false,
-        "configFile": false,
-        "presets": [
-          [
-            "@babel/preset-env",
-            {
-              "useBuiltIns": "usage",
-              "corejs": 3,
-              "targets": ">0.25%,not dead"
-            }
-          ],
-          "@babel/preset-react"
-        ]
-      }
-    }
   }
 }
