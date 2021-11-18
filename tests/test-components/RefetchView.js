@@ -1,8 +1,10 @@
 const React = require("react");
 const { useAsync } = require("../../dist/index.cjs");
 
-function RefetchView() {
-  const { data, refetch } = (0, useAsync)(fetcher);
+function RefetchView({ pause = false, index = 0 }) {
+  const { data, refetch } = (0, useAsync)(() => fetcher(index++), {
+    pause: pause,
+  });
   return React.createElement(
     React.Fragment,
     null,
@@ -16,11 +18,8 @@ function RefetchView() {
   );
 }
 
-let index = 0;
-
-async function fetcher() {
+async function fetcher(index) {
   if (index === 0) {
-    index += 1;
     return "hello";
   }
 

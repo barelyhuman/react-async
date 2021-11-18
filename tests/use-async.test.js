@@ -9,7 +9,7 @@ browserEnv();
 test("useAsync | refetch", (done) => {
   async function tester() {
     try {
-      const { getByText, queryByText } = render(<RefetchView />);
+      const { getByText, queryByText } = render(<RefetchView index={0} />);
       await waitFor(() => {
         expect(getByText("hello")).toBeTruthy();
       });
@@ -17,6 +17,28 @@ test("useAsync | refetch", (done) => {
       buttonEl.click();
       await waitFor(() => {
         expect(getByText("world")).toBeTruthy();
+      });
+      done();
+    } catch (err) {
+      done(err);
+    }
+  }
+
+  tester();
+});
+
+test("useAsync | pause", (done) => {
+  async function tester() {
+    try {
+      const { queryByText, rerender } = render(
+        <RefetchView pause={true} index={0} />
+      );
+      await waitFor(() => {
+        expect(queryByText("hello")).toBeNull();
+      });
+      rerender(<RefetchView pause={false} index={0} />);
+      await waitFor(() => {
+        expect(queryByText("hello")).toBeTruthy();
       });
       done();
     } catch (err) {
