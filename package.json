@@ -14,8 +14,11 @@
   "main": "dist/index.js",
   "module": "dist/index.m.js",
   "exports": {
-    "require": "./dist/index.js",
-    "default": "./dist/index.modern.js"
+    ".": {
+      "require": "./dist/index.js",
+      "default": "./dist/index.modern.js"
+    },
+    "./package.json": "./package.json"
   },
   "engines": {
     "node": ">=12"
