@@ -1,5 +1,5 @@
 const React = require("react");
-const { useAsync } = require("../../dist/index.cjs");
+const { useAsync } = require("../../dist/index.js");
 
 function RefetchView({ pause = false, index = 0 }) {
   const { data, refetch } = (0, useAsync)(() => fetcher(index++), {

@@ -1,7 +1,7 @@
 /* eslint-disable no-return-assign */
 const React = require("react");
 const browserEnv = require("browser-env");
-const { AsyncView } = require("../dist/index.cjs");
+const { AsyncView } = require("../dist/index.js");
 const got = require("got");
 const { render, waitFor } = require("@testing-library/react");
 

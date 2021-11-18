@@ -10,11 +10,13 @@
     "url": "https://barelyhuman.dev"
   },
   "types": "./index.d.ts",
-  "type": "module",
   "source": "src/index.js",
-  "main": "./dist/index.cjs",
-  "exports": "./dist/index.esm.js",
-  "module": "./dist/index.module.js",
+  "main": "dist/index.js",
+  "module": "dist/index.m.js",
+  "exports": {
+    "require": "./dist/index.js",
+    "default": "./dist/index.modern.js"
+  },
   "engines": {
     "node": ">=12"
   },
