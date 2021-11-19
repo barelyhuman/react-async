@@ -8,7 +8,6 @@ export function useAsync(
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const firstCall = useRef(true).current;
 
   const _fetcherCB = useCallback(
     async (params) => {
@@ -17,7 +16,7 @@ export function useAsync(
           return;
         }
         setLoading(true);
-        const data = await fetcher(firstCall ? args.initialParams : params);
+        const data = await fetcher(params);
         firstCall = false;
         setData(data);
         setLoading(false);
@@ -30,8 +29,8 @@ export function useAsync(
   );
 
   useAsyncEffect(async () => {
-    _fetcherCB();
-  }, [_fetcherCB]);
+    _fetcherCB(args.initialParams);
+  }, []);
 
   return {
     data,
