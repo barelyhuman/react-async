@@ -6,20 +6,23 @@ export function useAsync(fetcher = async () => {}, args = { pause: false }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const _fetcherCB = useCallback(async () => {
-    try {
-      if (args.pause) {
-        return;
+  const _fetcherCB = useCallback(
+    async (params) => {
+      try {
+        if (args.pause) {
+          return;
+        }
+        setLoading(true);
+        const data = await fetcher(params);
+        setData(data);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        setError(err);
       }
-      setLoading(true);
-      const data = await fetcher();
-      setData(data);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      setError(err);
-    }
-  }, [args.pause]);
+    },
+    [args.pause]
+  );
 
   useAsyncEffect(async () => {
     _fetcherCB();
@@ -29,8 +32,8 @@ export function useAsync(fetcher = async () => {}, args = { pause: false }) {
     data,
     loading,
     error,
-    refetch() {
-      _fetcherCB();
+    refetch(params) {
+      _fetcherCB(params);
     },
   };
 }
