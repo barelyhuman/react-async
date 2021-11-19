@@ -15,9 +15,15 @@ export declare function useAsyncEffect(
   deps: any[]
 ): void;
 
-export declare function useAsync(fetcher?: () => Promise<void>): {
-  data: any | null;
+export declare function useAsync(
+  fetcher?: () => Promise<void>,
+  args?: {
+    initialParams: any;
+    pause: boolean;
+  }
+): {
+  data: null;
   loading: boolean;
-  error: any | null;
-  refetch(): void;
+  error: null;
+  refetch(params: any): void;
 };

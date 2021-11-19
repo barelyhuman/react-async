@@ -29,6 +29,9 @@ export function useAsync(
   );
 
   useAsyncEffect(async () => {
+    // FIXME: if the pause is re-triggered due to a state change, the same initial data will
+    // be used instead of using the newly received data,
+    // possible solution is to use a ref to differentiate
     _fetcherCB(args.initialParams);
   }, [_fetcherCB]);
 
