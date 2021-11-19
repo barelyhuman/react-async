@@ -2,8 +2,9 @@ const React = require("react");
 const { useAsync } = require("../../dist/index.js");
 
 function RefetchView({ pause = false, index = 0 }) {
-  const { data, refetch } = (0, useAsync)(() => fetcher(index++), {
+  const { data, refetch } = (0, useAsync)(fetcher, {
     pause: pause,
+    initialParams: index++,
   });
   return React.createElement(
     React.Fragment,

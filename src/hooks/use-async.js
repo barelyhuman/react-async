@@ -1,9 +1,9 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { useAsyncEffect } from "./use-async-effect";
 
 export function useAsync(
   fetcher = async () => {},
-  args = { initialParams, pause: false }
+  args = { initialParams: {}, pause: false }
 ) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ export function useAsync(
 
   useAsyncEffect(async () => {
     _fetcherCB(args.initialParams);
-  }, []);
+  }, [_fetcherCB]);
 
   return {
     data,
