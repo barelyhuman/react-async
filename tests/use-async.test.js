@@ -48,3 +48,5 @@ test("useAsync | pause", (done) => {
 
   tester();
 });
+
+// TODO: add tests to check first call and 2nd call checks
