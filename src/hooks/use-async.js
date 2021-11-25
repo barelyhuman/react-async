@@ -36,7 +36,7 @@ export function useAsync(
     loading,
     error,
     refetch(params) {
-      _fetcherCB(params);
+      _fetcherCB(params || args.params);
     },
   };
 }
