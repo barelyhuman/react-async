@@ -2,6 +2,10 @@
 
 > async utilities for react (hooks, views, and more)
 
+## Why?
+
+[You can read that here](https://reaper.im/posts/working-with-async-code-in-react.html)
+
 ## Installation
 
 ```sh
@@ -30,7 +34,7 @@ Example:
 
 ```jsx
 <>
-  <AsyncView data={async () => _fetchAdminProfile(id)}>
+  <AsyncView data={_fetchAdminProfile} options={{ params: id, pause: !id }}>
     {({ data, loading, error }) => {
       if (loading) {
         return (
@@ -122,7 +126,17 @@ Example:
 
 ```jsx
 function Component({ id, ...props }) {
-  const { data, error, loading, refetch } = useAsync(() => SDK.fetchUser(id));
+  const { data, error, loading, refetch } = useAsync(SDK.fetchUser, {
+    // the parameter to pass to the function
+    params: id,
+    // wait for this condition to be `false`
+    pause: !id,
+  });
+
+  const onRefetch = () => {
+    refetch(id); //=> send new params
+    // refetch(); //=> use the one's from the original options value
+  };
 
   if (loading) {
     return <Loader />;
