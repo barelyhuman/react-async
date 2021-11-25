@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useIsomorphicLayoutEffect } from "./use-isomorphic-effect";
 
 export function useAsyncEffect(effect = async () => {}, deps) {
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const asyncActions = async () => {
       await effect();
     };
