@@ -1,77 +1,54 @@
 /* eslint-disable no-return-assign */
-const React = require("react");
-const browserEnv = require("browser-env");
-const { RefetchView } = require("./test-components/RefetchView");
-const { render, waitFor } = require("@testing-library/react");
+
+import { serial as test } from "ava";
+import React from "react";
+import browserEnv from "browser-env";
+import { RefetchView } from "../test-components/RefetchView.js";
+import { cleanup, render, waitFor } from "@testing-library/react";
 
 browserEnv();
+test.afterEach(cleanup);
 
-test("useAsync | refetch", (done) => {
-  async function tester() {
-    try {
-      const { getByText, queryByText } = render(<RefetchView index={0} />);
-      await waitFor(() => {
-        expect(getByText("hello")).toBeTruthy();
-      });
-      const buttonEl = queryByText("hello");
-      buttonEl.click();
-      await waitFor(() => {
-        expect(getByText("world")).toBeTruthy();
-      });
-      done();
-    } catch (err) {
-      done(err);
-    }
-  }
-
-  tester();
+test("useAsync | refetch", async (t) => {
+  const { getByText, queryByText } = render(<RefetchView index={0} />);
+  await waitFor(() => {
+    t.truthy(getByText("hello"));
+  });
+  const buttonEl = queryByText("hello");
+  buttonEl.click();
+  await waitFor(() => {
+    t.truthy(getByText("world"));
+  });
 });
 
-test("useAsync | pause", (done) => {
-  async function tester() {
-    try {
-      const { queryByText, rerender } = render(
-        <RefetchView pause={true} index={0} />
-      );
-      await waitFor(() => {
-        expect(queryByText("hello")).toBeNull();
-      });
-      rerender(<RefetchView pause={false} index={0} />);
-      await waitFor(() => {
-        expect(queryByText("hello")).toBeTruthy();
-      });
-      done();
-    } catch (err) {
-      done(err);
-    }
-  }
+test("useAsync | pause", async (t) => {
+  const { getByText, queryByText, rerender } = render(
+    <RefetchView pause={true} index={0} />
+  );
 
-  tester();
+  await waitFor(() => {
+    t.falsy(queryByText("hello"));
+  });
+  rerender(<RefetchView pause={false} index={0} />);
+  await waitFor(() => {
+    t.truthy(getByText("hello"));
+  });
 });
 
-test("useAsync | multiple pauses", (done) => {
-  async function tester() {
-    try {
-      const { queryByText, rerender } = render(
-        <RefetchView pause={true} index={0} />
-      );
-      await waitFor(() => {
-        expect(queryByText("hello")).toBeNull();
-      });
-      rerender(<RefetchView pause={false} index={0} />);
-      await waitFor(() => {
-        expect(queryByText("hello")).toBeTruthy();
-      });
-      const buttonElm = queryByText("hello");
-      buttonElm.click();
-      await waitFor(() => {
-        expect(queryByText("world")).toBeTruthy();
-      });
-      done();
-    } catch (err) {
-      done(err);
-    }
-  }
-
-  tester();
+test("useAsync | multiple pauses", async (t) => {
+  const { getByText, queryByText, rerender } = render(
+    <RefetchView pause={true} index={0} />
+  );
+  await waitFor(() => {
+    t.falsy(queryByText("hello"));
+  });
+  rerender(<RefetchView pause={false} index={0} />);
+  await waitFor(() => {
+    t.truthy(getByText("hello"));
+  });
+  const buttonElm = queryByText("hello");
+  buttonElm.click();
+  await waitFor(() => {
+    t.truthy(getByText("world"));
+  });
 });

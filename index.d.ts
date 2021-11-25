@@ -4,7 +4,7 @@ type AsyncViewProps<T extends {}> = {
   [x: string]: any;
   children: ReactChild;
   data: () => Promise<any>;
-  options: UseAsyncOptions<T>;
+  options?: UseAsyncOptions<T>;
 };
 
 type UseAsyncOptions<T> = {

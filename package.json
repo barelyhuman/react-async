@@ -25,9 +25,10 @@
   },
   "scripts": {
     "init": "npm i; cd tests;npm i;cd ..",
+    "prebuild": "rm -rf dist",
     "build": "microbundle --no-sourcemap --format 'modern,esm,cjs' --generateTypes false",
     "dev": "npm run build watch",
-    "test": "jest",
+    "test": "ava",
     "prepare": "npm run build && husky install",
     "fix": "npx standard --fix src/**/*.js",
     "prepublishOnly": "npm run build"
@@ -59,14 +60,16 @@
     "AsyncView"
   ],
   "devDependencies": {
+    "@babel/core": "^7.16.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.16.0",
     "@testing-library/react": "^12.1.2",
     "@types/react": "^16.9.2",
+    "ava": "^3.15.0",
     "browser-env": "^3.3.0",
+    "esm": "^3.2.25",
     "got": "^11.8.3",
     "husky": "^7.0.4",
-    "jest": "^27.3.1",
     "lint-staged": "^11.2.6",
     "microbundle": "^0.14.2",
     "react": "^16.8",
@@ -78,6 +81,12 @@
   "babel": {
     "presets": [
       "@babel/preset-react"
+    ]
+  },
+  "ava": {
+    "require": [
+      "esm",
+      "@babel/register"
     ]
   }
 }
