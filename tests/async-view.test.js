@@ -62,6 +62,3 @@ test("<AsyncView data={fetchPostError} />", (done) => {
 
   tester();
 });
-
-// TODO: add hook example code and render and test hooks
-// need to test initial render of loading, then error state , data state and refetched(loading + data state again) state.

@@ -49,4 +49,29 @@ test("useAsync | pause", (done) => {
   tester();
 });
 
-// TODO: add tests to check first call and 2nd call checks
+test("useAsync | multiple pauses", (done) => {
+  async function tester() {
+    try {
+      const { queryByText, rerender } = render(
+        <RefetchView pause={true} index={0} />
+      );
+      await waitFor(() => {
+        expect(queryByText("hello")).toBeNull();
+      });
+      rerender(<RefetchView pause={false} index={0} />);
+      await waitFor(() => {
+        expect(queryByText("hello")).toBeTruthy();
+      });
+      const buttonElm = queryByText("hello");
+      buttonElm.click();
+      await waitFor(() => {
+        expect(queryByText("world")).toBeTruthy();
+      });
+      done();
+    } catch (err) {
+      done(err);
+    }
+  }
+
+  tester();
+});

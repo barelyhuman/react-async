@@ -3,7 +3,7 @@ import { useAsyncEffect } from "./use-async-effect";
 
 export function useAsync(
   fetcher = async () => {},
-  args = { initialParams: {}, pause: false }
+  args = { params: {}, pause: false }
 ) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,6 @@ export function useAsync(
         }
         setLoading(true);
         const data = await fetcher(params);
-        firstCall = false;
         setData(data);
         setLoading(false);
       } catch (err) {
@@ -29,10 +28,7 @@ export function useAsync(
   );
 
   useAsyncEffect(async () => {
-    // FIXME: if the pause is re-triggered due to a state change, the same initial data will
-    // be used instead of using the newly received data,
-    // possible solution is to use a ref to differentiate
-    _fetcherCB(args.initialParams);
+    _fetcherCB(args.params);
   }, [_fetcherCB]);
 
   return {
